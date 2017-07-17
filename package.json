@@ -1,0 +1,30 @@
+{
+  "name": "veoveo_app",
+  "version": "1.0.0",
+  "description": "Movie Listing App for Dominican Republic",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rudymatos/VeoVeoApp.git"
+  },
+  "keywords": [
+    "Movie",
+    "Listing",
+    "Node"
+  ],
+  "author": "rudymatos.dev@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rudymatos/VeoVeoApp/issues"
+  },
+  "homepage": "https://github.com/rudymatos/VeoVeoApp#readme",
+  "dependencies": {
+    "blipp": "^2.3.0",
+    "got": "^7.1.0",
+    "hapi": "^16.4.3",
+    "xmlreader": "^0.2.3"
+  }
+}
