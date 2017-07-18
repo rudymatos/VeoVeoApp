@@ -2,7 +2,8 @@ var constants = require('../utilities/constants.js'),
     got = require('got'),
     xmlReader = require('xmlreader')
 movieObj = require('../pojos/movie.js'),
-    theaterObj = require('../pojos/theater.js')
+    scheduleObj = require('../pojos/schedule.js')
+theaterObj = require('../pojos/theater.js')
 
 module.exports = function (server) {
 
@@ -25,7 +26,7 @@ module.exports = function (server) {
                     var movieList = fillUpMovieList(movies)
                     var theaterList = fillUpTheaterList(theaters)
                     fillUpScheduleList(movieList, theaterList, schedules)
-
+                    response(movieList)
                 });
             }).catch(error => {
                 console.log(error)
@@ -36,38 +37,41 @@ module.exports = function (server) {
 
     function fillUpScheduleList(movieList, theaterList, schedulesNode) {
         schedulesNode.each(function (i, currentSchedule) {
-            parseSchedule(currentSchedule.Detail.text())
+            parseSchedule(movieList, theaterList, currentSchedule)
         });
     }
 
-    function parseSchedule(currentScheduleDetail) {
-        var values = currentScheduleDetail.split(' ')
-        
-        for (var index = 0; index < values.length; index += 2) {
-            var days = values[index].split('-')
-            var times = values[index + 1].split(',')
-
-            var scheduleDays = getDaysToCreate(days)
-            console.log(scheduleDays)
-
-
+    function parseSchedule(movieList, theaterList, currentSchedule) {
+        var scheduleDayAndTime = currentSchedule.Detail.text()
+        if (typeof scheduleDayAndTime !== 'undefined' && scheduleDayAndTime !== 'n/a') {
+            scheduleDayAndTime = scheduleDayAndTime.replace('  ', ' ').split(' ')
+            for (var index = 0; index < scheduleDayAndTime.length; index += 2) {
+                var days = scheduleDayAndTime[index].split('-')
+                var times = scheduleDayAndTime[index + 1].split(',')
+                var scheduleDays = getDaysToCreate(days)
+                var currentMovie = movieList.find(m => m.id = currentSchedule.Movie.text())
+                var currentTheater = theaterList.find(t => t.id = currentSchedule.Theater.text())
+                scheduleDays.forEach(function (scheduleDay) {
+                    times.forEach(function (time) {
+                        let schedule = new scheduleObj.Schedule(currentTheater, scheduleDay, time.replace('/',''))
+                        currentMovie.schedules.push(schedule)
+                    })
+                })
+            }
         }
-
-
-
     }
 
     function getDaysToCreate(days) {
         var validDays = []
         var weekDays = ['lun', 'mar', 'mie', 'jue', 'vie', 'sab', 'dom']
-        if (days !== 'undefined' && days.length > 0) {
-            var startDayIndex = weekDays.indexOf(days[0].replace(',',''))
-            var endDayIndex = weekDays.indexOf(days[days.length - 1].replace(',',''))
+        if (typeof days !== 'undefined' && days.length > 0) {
+            var startDayIndex = weekDays.indexOf(days[0].replace(',', ''))
+            var endDayIndex = weekDays.indexOf(days[days.length - 1].replace(',', ''))
             var hasEnded = false
-            while(hasEnded){
+            while (!hasEnded) {
                 validDays.push(weekDays[startDayIndex])
                 startDayIndex += 1
-                if(startDayIndex > endDayIndex){
+                if (startDayIndex > endDayIndex) {
                     hasEnded = true
                 }
             }
