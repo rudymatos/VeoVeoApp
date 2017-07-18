@@ -1,9 +1,9 @@
-var constants = require('../utilities/constants.js'),
-    got = require('got'),
-    xmlReader = require('xmlreader')
-movieObj = require('../pojos/movie.js'),
+var constants   = require('../utilities/constants.js'),
+    got         = require('got'),
+    xmlReader   = require('xmlreader')
+    movieObj    = require('../pojos/movie.js'),
     scheduleObj = require('../pojos/schedule.js')
-theaterObj = require('../pojos/theater.js')
+    theaterObj  = require('../pojos/theater.js')
 
 module.exports = function (server) {
 
@@ -27,6 +27,7 @@ module.exports = function (server) {
                     var theaterList = fillUpTheaterList(theaters)
                     fillUpScheduleList(movieList, theaterList, schedules)
                     response(movieList)
+                    
                 });
             }).catch(error => {
                 console.log(error)
@@ -45,15 +46,19 @@ module.exports = function (server) {
         var scheduleDayAndTime = currentSchedule.Detail.text()
         if (typeof scheduleDayAndTime !== 'undefined' && scheduleDayAndTime !== 'n/a') {
             scheduleDayAndTime = scheduleDayAndTime.replace('  ', ' ').split(' ')
+
             for (var index = 0; index < scheduleDayAndTime.length; index += 2) {
+            
                 var days = scheduleDayAndTime[index].split('-')
                 var times = scheduleDayAndTime[index + 1].split(',')
                 var scheduleDays = getDaysToCreate(days)
-                var currentMovie = movieList.find(m => m.id = currentSchedule.Movie.text())
-                var currentTheater = theaterList.find(t => t.id = currentSchedule.Theater.text())
+
+                var currentMovie = movieList.find(m => m.id == currentSchedule.Movie.text())
+                var currentTheater = theaterList.find(t => t.id == currentSchedule.Theater.text())
+
                 scheduleDays.forEach(function (scheduleDay) {
                     times.forEach(function (time) {
-                        let schedule = new scheduleObj.Schedule(currentTheater, scheduleDay, time.replace('/',''))
+                        let schedule = new scheduleObj.Schedule(currentTheater, scheduleDay, time.replace('/', ''))
                         currentMovie.schedules.push(schedule)
                     })
                 })
@@ -117,7 +122,7 @@ module.exports = function (server) {
             var writers = getStringValue(currentMovie.Writers)
 
             //Creating Movie Object
-            let movie = new movieObj.Movie(id, name, coverUrl, director, duration, genres, language, rating, plot, trailerUrl, writers)
+            let movie = new movieObj.Movie(id, name, coverUrl, director, duration, genres, language, rating, plot, trailerUrl, writers,0,0)
             movie.schedules.push(i)
             movieList.push(movie)
         });

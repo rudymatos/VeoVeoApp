@@ -7,6 +7,6 @@ exports.Schedule = class{
     }
 
     toString(){
-        return `${theater.name} (${day} at ${time})`
+        return `${this.theater.name} (${this.day} at ${this.time})`
     }
 }
