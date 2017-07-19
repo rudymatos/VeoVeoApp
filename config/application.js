@@ -16,12 +16,12 @@ global.App = {
     feed: feed,
     envMode: envMode,
     firebaseConfig: process.env.FIREBASE_MAP || {
-        apiKey: "AIzaSyCT3HS7xJR0uPQQkY4ncBESJouzHKwY_6Q",
-        authDomain: "veoveoapp-e2162.firebaseapp.com",
-        databaseURL: "https://veoveoapp-e2162.firebaseio.com",
-        projectId: "veoveoapp-e2162",
-        storageBucket: "veoveoapp-e2162.appspot.com",
-        messagingSenderId: "838473042899"
+        apiKey: process.env.FIREBASE_APIKEY,
+        authDomain: process.env.FIREBASE_AUTHDOMAIN,
+        databaseURL: process.env.FIREBASE_DATABASEURL,
+        projectId: process.env.FIREBASE_PROJECTID,
+        storageBucket: process.env.FIREBASE_STORAGEBUCKET,
+        messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID
     },
     version: packageJSON.version,
     start: function () {
