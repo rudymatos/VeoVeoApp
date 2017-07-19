@@ -1,6 +1,6 @@
 var envMode = process.env.NODE_ENV || 'development'
     hapi = require('hapi'),
-    feed = process.env.FEED_XML_URL || 'http://localhost:3000/movies/get_xml'
+    feed = process.env.FEED_XML_URL
     blipp = require('blipp'),
     moviesRoute = require('../routes/movies')
     packageJSON = require('../package.json')
@@ -15,7 +15,7 @@ global.App = {
     port: process.env.PORT || 3000,
     feed: feed,
     envMode: envMode,
-    firebaseConfig: process.env.FIREBASE_MAP || {
+    firebaseConfig:{
         apiKey: process.env.FIREBASE_APIKEY,
         authDomain: process.env.FIREBASE_AUTHDOMAIN,
         databaseURL: process.env.FIREBASE_DATABASEURL,
