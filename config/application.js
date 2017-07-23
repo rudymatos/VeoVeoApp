@@ -1,6 +1,6 @@
 var envMode     = process.env.NODE_ENV || 'development'
     hapi        = require('hapi'),
-    feed        = process.env.FEED_XML_URL
+    feed        = process.env.FEED_XML_URL || 'http://localhost:3000/movies/get_xml'
     blipp       = require('blipp'),
     moviesRoute = require('../routes/movies')
     packageJSON = require('../package.json')
@@ -14,15 +14,16 @@ global.App = {
     port: process.env.PORT || 3000,
     feed: feed,
     envMode: envMode,
+    movieDBVersion : process.env.MOVIE_DB_VERSION || 0.1,
     version: packageJSON.version,
     firebase: firebase,
     start: function () {
         App.hapiServer.connection({ port: App.port, routes: { cors: true } });
         var firebaseConfig = {
-            apiKey: process.env.FIREBASE_APIKEY ,
-            authDomain: process.env.FIREBASE_AUTHDOMAIN ,
-            databaseURL: process.env.FIREBASE_DATABASEURL ,
-            projectId: process.env.FIREBASE_PROJECTID ,
+            apiKey: process.env.FIREBASE_APIKEY,
+            authDomain: process.env.FIREBASE_AUTHDOMAIN,
+            databaseURL: process.env.FIREBASE_DATABASEURL,
+            projectId: process.env.FIREBASE_PROJECTID,
             storageBucket: process.env.FIREBASE_STORAGEBUCKET,
             messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID
         }

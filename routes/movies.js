@@ -6,17 +6,8 @@ var constants   = require('../utilities/constants.js'),
     theaterObj  = require('../pojos/theater.js')
     dataParser  = require('../utilities/data_parser.js')
     frbHelper   = require('../utilities/firebase.js')
-    
-module.exports = function (server) {
 
-    server.route({
-        method: 'GET',
-        path: '/firebase',
-        handler: function (request, response) {
-            let firebaseHelper = new frbHelper.FirebaseHelper(App.firebase)
-            firebaseHelper.saveDataToFirebase(response,"movielist")
-        }
-    })
+module.exports = function (server) {
 
     server.route({
         method: 'GET',
@@ -37,8 +28,8 @@ module.exports = function (server) {
                     var movieList = dataParser.fillUpMovieList(movies)
                     var theaterList = dataParser.fillUpTheaterList(theaters)
                     dataParser.fillUpScheduleList(movieList, theaterList, schedules)
-                    response(movieList)
-
+                    let firebaseHelper = new frbHelper.FirebaseHelper(App.firebase)
+                    firebaseHelper.saveDataToFirebase(response, movieList)
                 });
             }).catch(error => {
                 console.log(error)
