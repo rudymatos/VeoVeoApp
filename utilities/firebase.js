@@ -9,7 +9,10 @@ exports.FirebaseHelper = class {
         var nextVersion = 1.0
         ref.orderByChild('version').limitToLast(1).once('value', function (snap) {
             if (snap.val() !== null) {
+                console.log(`App MovieDBVersion: ${App.movieDBVersion}`)
+                console.log(`CurrentVersion : ${snap.val()[(Object.keys(snap.val())[0])].version}`)
                 nextVersion = Math.round((snap.val()[(Object.keys(snap.val())[0])].version + App.movieDBVersion) * 10)/10
+                console.log(`NextVersion : ${nextVersion}`)
             }
         }).then(value => {
             var movieListing = {version: nextVersion, updatedOn: new Date().toString(), data: data}
