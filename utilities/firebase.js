@@ -9,15 +9,14 @@ exports.FirebaseHelper = class {
         var nextVersion = 1.0
         ref.orderByChild('version').limitToLast(1).once('value', function (snap) {
             if (snap.val() !== null) {
-                console.log(`App MovieDBVersion: ${App.movieDBVersion}`)
-                console.log(`CurrentVersion : ${snap.val()[(Object.keys(snap.val())[0])].version}`)
-                console.log(`math calculation : ${Math.round((1.0 + 0.1) *  10)/10}`)
-                nextVersion = Math.round((snap.val()[(Object.keys(snap.val())[0])].version + App.movieDBVersion) * 10)/10
-                console.log(`NextVersion : ${nextVersion}`)
+                var currentVersion = snap.val()[(Object.keys(snap.val())[0])].version
+                var movieDBVersion = App.movieDBVersion
+                nextVersion = Math.round((currentVersion + movieDBVersion) * 10)/10
+                console.log(`CurrentVersion : ${currentVersion} , DBVersion : ${movieDBVersion} , NextVersion : ${nextVersion}`)
             }
         }).then(value => {
             var movieListing = {version: nextVersion, updatedOn: new Date().toString(), data: data}
-            ref.push(movieListing)
+            // ref.push(movieListing)
             response(constants.DATA_SAVED_IN_FIREBASE_SUCESSFULLY)
         });
     }
