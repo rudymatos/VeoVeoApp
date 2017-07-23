@@ -19,12 +19,12 @@ global.App = {
     start: function () {
         App.hapiServer.connection({ port: App.port, routes: { cors: true } });
         var firebaseConfig = {
-            apiKey: process.env.FIREBASE_APIKEY || 'AIzaSyCT3HS7xJR0uPQQkY4ncBESJouzHKwY_6Q',
-            authDomain: process.env.FIREBASE_AUTHDOMAIN || 'veoveoapp-e2162.firebaseapp.com',
-            databaseURL: process.env.FIREBASE_DATABASEURL || 'https://veoveoapp-e2162.firebaseio.com',
-            projectId: process.env.FIREBASE_PROJECTID || 'veoveoapp-e2162',
-            storageBucket: process.env.FIREBASE_STORAGEBUCKET || 'veoveoapp-e2162.appspot.com',
-            messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID || '838473042899'
+            apiKey: process.env.FIREBASE_APIKEY ,
+            authDomain: process.env.FIREBASE_AUTHDOMAIN ,
+            databaseURL: process.env.FIREBASE_DATABASEURL ,
+            projectId: process.env.FIREBASE_PROJECTID ,
+            storageBucket: process.env.FIREBASE_STORAGEBUCKET,
+            messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID '
         }
         App.firebase.initializeApp(firebaseConfig)
         moviesRoute(App.hapiServer);
