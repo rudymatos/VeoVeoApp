@@ -24,7 +24,7 @@ global.App = {
             databaseURL: process.env.FIREBASE_DATABASEURL ,
             projectId: process.env.FIREBASE_PROJECTID ,
             storageBucket: process.env.FIREBASE_STORAGEBUCKET,
-            messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID '
+            messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID
         }
         App.firebase.initializeApp(firebaseConfig)
         moviesRoute(App.hapiServer);
