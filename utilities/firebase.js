@@ -11,7 +11,7 @@ exports.FirebaseHelper = class {
             if (snap.val() !== null) {
                 console.log(`App MovieDBVersion: ${App.movieDBVersion}`)
                 console.log(`CurrentVersion : ${snap.val()[(Object.keys(snap.val())[0])].version}`)
-                console.log(`math calculation : ${Math.round((snap.val()[(Object.keys(snap.val())[0])].version + App.movieDBVersion))}`)
+                console.log(`math calculation : ${Math.round((1.0 + 0.1) *  10)/10}`)
                 nextVersion = Math.round((snap.val()[(Object.keys(snap.val())[0])].version + App.movieDBVersion) * 10)/10
                 console.log(`NextVersion : ${nextVersion}`)
             }
