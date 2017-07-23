@@ -6,7 +6,6 @@ var envMode     = process.env.NODE_ENV || 'development'
     packageJSON = require('../package.json')
     firebase    = require('firebase')
 
-
 console.log('Loading App in ' + envMode + ' mode.')
 var server = new hapi.Server()
 
