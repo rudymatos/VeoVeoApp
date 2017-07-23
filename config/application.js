@@ -5,8 +5,7 @@ var envMode     = process.env.NODE_ENV || 'development'
     moviesRoute = require('../routes/movies')
     packageJSON = require('../package.json')
     firebase    = require('firebase')
-
-console.log('Loading App in ' + envMode + ' mode.')
+    
 var server = new hapi.Server()
 
 global.App = {
