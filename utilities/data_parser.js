@@ -4,7 +4,8 @@ exports.fillUpScheduleList = function fillUpScheduleList(movieList, theaterList,
     schedulesNode.each(function (i, currentSchedule) {
         var scheduleDayAndTime = currentSchedule.Detail.text()
         if (validator.validateScheduleTime(scheduleDayAndTime)) {
-            scheduleDayAndTime = scheduleDayAndTime.replace('  ', ' ').split(' ')
+            const regexExpression = "/\s{2,}/g"
+            scheduleDayAndTime = scheduleDayAndTime.replace('/','/ ').replace(regexExpression, ' ').split(' ').filter(Boolean)
             for (var index = 0; index < scheduleDayAndTime.length; index += 2) {
                 var days = scheduleDayAndTime[index].split('-')
                 var times = scheduleDayAndTime[index + 1].split(',')
